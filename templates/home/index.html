@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+{% for home in homes %}
+
+<div class="background_home shadow"style="background-image: url('{{ home.background_image.url }}');">
+    <div class="media-object  ">
+        <div class="media-object-section">
+        <div class="thumbnail">
+            <img src= "{{home.image.url}}">
+        </div>
+        </div>
+        <div class="media-object-section main-section">
+        <h4 class="home_title"><strong>{{home.title}}</strong></h4>
+        <p class="home_content resaltar_texto" >{{home.content }}</p>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+<div class="grid-x grid-margin-x padding_left">
+    {% for articulo in articulos %}
+        <div class="cell large-3 ">
+            <div class="callout shadow" style="width: 100%; height: 100%;">
+                <div class="card-section article_title">
+                    <h4><a class="link" href="{% url 'home_app:articulo_detail' articulo.id %}"><strong>{{articulo.title | truncatechars:23}}</strong></a></h4>
+                </div>
+                <img class='image' src="{{articulo.image.url}}">
+               
+                <div class="card-section ">
+                    <p class="article_content">{{articulo.content | truncatechars:100}}</p>
+                </div>
+            </div>
+        </div>
+    {%empty%}
+        <h3 class='mensaje_vacio'>No hay resultados</h3>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
+

@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+    Resultados
+
+{% endblock title %}
+
+{% block content %}
+
+
+    <div class="row margin_top">
+        <div class="columns">
+          <h4>Resultados Deportivos</h4>
+          <div class="secondary callout">
+            <p>Once you put it all together, here's what you get!<br /> Resize your browser window to see the toggle happen.<br>I am an `Accordion on small and large` but I am `Tabs on medium`</p>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns">
+            <ul class="accordion" data-responsive-accordion-tabs="accordion medium-tabs large-accordion">
+            {% for deporte in deportes %}
+                    <li class="accordion-item" data-accordion-item>
+                    <a href="#" class="accordion-title letter black"><strong>{{deporte}}</strong></a>
+                    <div class="accordion-content" data-tab-content >
+                        {% for categoria in sport_categories %}
+                            {% if categoria.sport_id == deporte.id %}
+                            <div class="hover_arco" >
+                                <a href="{% url 'sports_app:resultados_list' categoria.id%}">- {{categoria}}</a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    </li>
+            {%empty%}
+                <h3 class='mensaje_vacio'>No hay resultados</h3>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock content %}
+

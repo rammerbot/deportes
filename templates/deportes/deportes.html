@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{%load static%}
+
+{% block title %}
+    Deportes
+{% endblock title %}
+
+{% block content %}
+
+    
+    {% for deporte in deportes %}
+        <div class="callout shadow_callout">  
+            <h1>{{deporte}}</h1>
+            <p>{{deporte.description | safe}}</p>
+            <img src="{{deporte.image.url}}" alt="Imagen" style= "height: 100px;" >
+        </div>  
+    {% endfor %}
+
+
+{% endblock content %}
+    

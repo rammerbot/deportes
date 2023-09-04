@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+        <title>{% block title %}{% endblock title %}</title>
+    </head>
+    <body class = "fondo">
+        {% block header %}
+           {%include 'includes/header.html'%}
+        {% endblock header %}
+
+        {% block menu_vertical %}
+
+        {% endblock menu_vertical %}
+        {% block content %}
+
+        {% endblock content %}
+        
+        <script src="{% static 'js/vendor/jquery.js' %}"></script>
+        <script src="{% static 'js/vendor/what-input.js' %}"></script>
+        <script src="{% static 'js/vendor/foundation.min.js' %}"></script>
+        <script>
+            $(document).foundation();
+        </script>
+
+        {% block footer %}
+            {%include 'includes/footer.html'%}
+        {% endblock footer %}
+        
+    </body>
+</html>

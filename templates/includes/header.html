@@ -1,0 +1,31 @@
+
+  
+  <div class="top-bar shadow" id="responsive-menu">
+    <div class="top-bar-left">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <li ><a class="menu-text white-letter " href="{% url 'home_app:index' %}">Deportes al Dia</a></li>
+        {% for deporte in sports_list %}
+        <li class="has-submenu">         
+          <a class="blue_letter" href="#0">{{deporte.sport}}</a>
+          
+          <ul class="submenu menu vertical " data-submenu>
+            {% for categoria in sport_categories %}
+            {% if categoria.sport_id == deporte.id %}
+            <li><a class="link"  href="{% url 'sports_app:eventos_list' categoria.id %}">{{categoria.category}}</a></li>        
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+        <li><a class="link" href="{% url 'sports_app:resultados' %}">Resultados</a></li>
+        <li><strong><a class="link" href="{% url 'home_app:quienes_somos' %}">Sobre Nosotros</a></strong></li>
+        <li><strong><a class="link" href="{% url 'home_app:contactanos' %}">Trabaja con Nosotros</a></strong></li>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu">
+        <!-- espacio para logo de la pagina-->
+      </ul>
+    </div>
+  </div>
+</div>
