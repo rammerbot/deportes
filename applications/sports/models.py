@@ -3,6 +3,7 @@ from ckeditor.fields import RichTextField
 
 from django.db import models
 
+
 # Create your models here.
 
 # Registro de deportes
@@ -35,7 +36,8 @@ class SportCategories(TimeStampedModel):
 # Equipos
 class Teams(TimeStampedModel):
     name = models.CharField("Nombre", max_length=50)
-    image = models.ImageField('Imagen', upload_to='Equipos/')
+    image_31_28 = models.ImageField('Imagen de 31x28', upload_to='Equipos/')
+    image_98_98 = models.ImageField('Imagen 98x98', upload_to='Equipos/', blank=True)
     sport_category = models.ForeignKey(SportCategories, on_delete=models.CASCADE)
 
     class Meta:
@@ -57,12 +59,21 @@ class Events(TimeStampedModel):
     
 
     @property
-    def home_image(self):
-        return self.home_team.image.url if self.home_team else None
+    def home_image_31_28(self):
+        return self.home_team.image_31_28.url if self.home_team else None
 
     @property
-    def visitor_image(self):
-        return self.visitor_team.image.url if self.visitor_team else None
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_31_28.url if self.visitor_team else None
+    
+    
+    @property
+    def home_image_98_98(self):
+        return self.home_team.image_98_98.url if self.home_team else None
+
+    @property
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_98_98.url if self.visitor_team else None
     
     class Meta:
         verbose_name = "Evento"
@@ -70,6 +81,44 @@ class Events(TimeStampedModel):
 
     def __str__(self):
         return self.event
+    
+# Eventos principales
+class PrincipalEvent(TimeStampedModel):
+    event = models.CharField('Evento', max_length=100)
+    sport = models.ForeignKey(Sports, on_delete=models.CASCADE)
+    sport_category = models.ForeignKey(SportCategories, on_delete=models.CASCADE)
+    description = models.TextField("descripcion")
+    home_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='home_principal_event')
+    visitor_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='visitor_principal_event')
+    date = models.DateTimeField('Fecha')
+    active = models.BooleanField('Activo')
+    
+
+    @property
+    def home_image_31_28(self):
+        return self.home_team.image_31_28.url if self.home_team else None
+
+    @property
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_31_28.url if self.visitor_team else None
+    
+    
+    @property
+    def home_image_98_98(self):
+        return self.home_team.image_98_98.url if self.home_team else None
+
+    @property
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_98_98.url if self.visitor_team else None
+    
+    class Meta:
+        verbose_name = "Evento Principal"
+        verbose_name_plural = "Eventos principales"
+
+    def __str__(self):
+        return self.event
+    
+    
 
 # Resultado de eventos 
 class Result(TimeStampedModel):
@@ -82,12 +131,20 @@ class Result(TimeStampedModel):
     date = models.DateTimeField('Fecha')
 
     @property
-    def home_image(self):
-        return self.home_team.image.url if self.home_team else None
+    def home_image_31_28(self):
+        return self.home_team.image_31_28.url if self.home_team else None
 
     @property
-    def visitor_image(self):
-        return self.visitor_team.image.url if self.visitor_team else None
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_31_28.url if self.visitor_team else None
+    
+    @property
+    def home_image_98_98(self):
+        return self.home_team.image_98_98.url if self.home_team else None
+
+    @property
+    def visitor_image_31_28(self):
+        return self.visitor_team.image_98_98.url if self.visitor_team else None
     
     class Meta:
         verbose_name = "Resultado"

@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import get_object_or_404, get_list_or_404
 
 from .models import Sports, Events, Teams, Result, SportCategories
+from applications.home.models import News
 
 # Create your views here.
 
@@ -16,17 +17,26 @@ class SportView(ListView):
 
 
 # Proximos Eventos 
-class EventsView(ListView):
-    template_name = "eventos/eventos.html"
+class NewsView(ListView):
+    template_name = "news/news.html"
     model = Events
     context_object_name = "eventos"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kword = self.request.GET.get('kword','')
+        context["articulos_1"] = News.objects.buscar_breaking_news(kword)
+        context["articulos"] = News.objects.buscar_news(kword)
+        context["deportes"] = Sports.objects.all()
+        context["resultados"] = Result.objects.all().order_by("date")
 
+        return context
+ 
 # Detalle de Evento
-def event_detail_view(request, pk):
-    evento = get_object_or_404(Events, id=pk)
+def new_detail_view(request, pk):
+    new = get_object_or_404(News, id=pk)
 
-    return render(request, "eventos/eventos_detail.html", {
-        "evento":evento,
+    return render(request, "news/news_detail.html", {
+        "new":new,
     })    
 
 # lista de Equipos
@@ -63,7 +73,8 @@ def events_list_view(request, pk):
   
     eventos = Events.objects.filter(sport_category_id = pk).order_by('created')
 
-    return render(request, 'eventos/eventos_list.html',{
+    return render(request, 'news/news_list.html',{
       'eventos':eventos  
         }
     )
+

@@ -1,47 +1,147 @@
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block title %}
     Home
 {% endblock %}
 
-{% block content %}
+{% block content %} 
 
-{% for home in homes %}
-
-<div class="background_home shadow"style="background-image: url('{{ home.background_image.url }}');">
-    <div class="media-object  ">
-        <div class="media-object-section">
-        <div class="thumbnail">
-            <img src= "{{home.image.url}}">
-        </div>
-        </div>
-        <div class="media-object-section main-section">
-        <h4 class="home_title"><strong>{{home.title}}</strong></h4>
-        <p class="home_content resaltar_texto" >{{home.content }}</p>
-        </div>
-    </div>
-</div>
-
-{% endfor %}
-<div class="grid-x grid-margin-x padding_left">
-    {% for articulo in articulos %}
-        <div class="cell large-3 ">
-            <div class="callout shadow" style="width: 100%; height: 100%;">
-                <div class="card-section article_title">
-                    <h4><a class="link" href="{% url 'home_app:articulo_detail' articulo.id %}"><strong>{{articulo.title | truncatechars:23}}</strong></a></h4>
+<div class="matchs-info">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="row">
+            <div class="full">
+             <div class="matchs-vs">
+                <div class="vs-team">
+                    <div class="team-btw-match">
+                        <ul>
+                            <li>
+                                <img src="{{evento_principal.home_team.image_98_98.url}}" alt="">
+                                <span>{{evento_principal.home_team}}</span>
+                            </li>
+                            <li class="vs"><span>vs</span></li>
+                            <li>
+                                <img src="{{evento_principal.visitor_team.image_98_98.url}}" alt="">
+                                <span>{{evento_principal.visitor_team}}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <img class='image' src="{{articulo.image.url}}">
-               
-                <div class="card-section ">
-                    <p class="article_content">{{articulo.content | truncatechars:100}}</p>
                 </div>
             </div>
         </div>
-    {%empty%}
-        <h3 class='mensaje_vacio'>No hay resultados</h3>
-    {% endfor %}
-</div>
-
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="row">
+            <div class="full">
+                <div class="right-match-time">
+                    <h2>{{evento_principal}}</h2>
+                    <ul id="countdown-1" class="countdown">
+                    
+                    <li><span class="seconds">{{evento_principal.date}}</span></li>
+                    </ul>
+                    <span>{{evento_principal.description}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+<section id="contant" class="contant">
+    <div class="container">
+       <div class="row">
+            <div class="col-lg-4 col-sm-4 col-xs-12">
+                <aside id="sidebar" class="left-bar">
+                    <div class="banner-sidebar">
+                    <img class="img-responsive" src="{{noticia.image.url}}" alt="#" />
+                    <h3>{{noticia.content|truncatechars:100}}</h3>
+                    </div>
+                </aside>
+                <h4>Proximos Partidos</h4>
+                <aside id="sidebar" class="left-bar">
+                    <div class="feature-matchs">
+                        <div class="team-btw-match">
+                            {% for evento in eventos %}
+                            <ul>
+                                <li>
+                                    <img src="{{evento.home_team.image_31_28.url}}" alt="">
+                                    <span>{{evento.home_team}}</span>
+                                </li>
+                                <li class="vs"><span>vs</span></li>
+                                <li>
+                                    <img src="{{evento.visitor_team.image_31_28.url}}" alt="">
+                                    <span>{{evento.visitor_team}}</span>
+                                </li>
+                            </ul>
+                            {% endfor %}
+                            <ul>
+                        </div>
+                    </div>
+                </aside>
+                <h4>Resultados</h4>
+                <aside id="sidebar" class="left-bar">
+                    <div class="feature-matchs">
+                        <div class="team-btw-match">
+                            {% for resultado in resultados %}
+                            <ul>
+                                <li>
+                                    <img src="{{resultado.home_team.image_31_28.url}}" alt="">
+                                    <span>{{resultado.home_team}}</span>
+                                </li>
+                                <li class="vs"><span>vs</span></li>
+                                <li>
+                                    <img src="{{resultado.visitor_team.image_31_28.url}}" alt="">
+                                    <span>{{resultado.visitor_team}}</span>
+                                </li>
+                            </ul>
+                            {% endfor %}
+                            <ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-lg-8 col-sm-8 col-xs-12">
+                {% for articulo in articulos %}
+                    <div class="news-post-holder">
+                        <div class="news-post-widget">
+                            <img class="img-responsive" src="{{articulo.image.url}}" alt="">
+                            <div class="news-post-detail">
+                                <span class="date">{{articulo.created}}</span>
+                                <h2><a href="{% url "home_app:article_detail" articulo.id %}">{{articulo.title}}</a></h2>
+                                <p>{{articulo.content|truncatechars:200}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+ </section>
+ <section>
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="full">
+                <div class="main-heading sytle-2">
+                   <h2>Video de la Semana</h2>
+                   <p>{{video.description}}</p>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <section class="video_section_main theme-padding middle-bg vedio">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="full">
+                <div class="match_vedio">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/4Dko5W96WHg?si=4LlCsVc3gxOsAEEF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
 
 {% endblock content %}
 

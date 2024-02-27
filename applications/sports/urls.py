@@ -6,8 +6,8 @@ from . import views
 app_name = 'sports_app'
 urlpatterns = [
     path('deportes/',views.SportView.as_view(), name="deportes" ),
-    path('eventos/', views.EventsView.as_view(), name="eventos"),
-    path('evento_detail/<pk>/', views.event_detail_view, name="evento_detail"),
+    path('news/', views.NewsView.as_view(), name="news"),
+    path('new_detail/<pk>/', views.new_detail_view, name="new_detail"),
     path('equipos/', views.TeamsView.as_view(), name="equipos"),
     path('equipos_detalles/', views.TeamsDetailViews.as_view(), name="equipos_detalles"),
     path('resultados/', views.SportsResultsView.as_view(), name="resultados"),

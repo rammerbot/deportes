@@ -36,6 +36,7 @@ BASE_APPS = [
 LOCAL_APPS = [
     'applications.sports',
     'applications.home',
+    'applications.users',
 ]
 
 THIRD_APPS = [
@@ -73,7 +74,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'applications.sports.context_processors.sports_list',
                 'applications.sports.context_processors.sport_categories',
-                
+                'applications.sports.context_processors.event_list',
+                'applications.home.context_processors.publicity_list'                
             ],
         },
     },
@@ -139,3 +141,4 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'users.User'
