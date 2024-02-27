@@ -99,18 +99,36 @@
                 </aside>
             </div>
             <div class="col-lg-8 col-sm-8 col-xs-12">
-                {% for articulo in articulos %}
+                {% for post in posts %}
                     <div class="news-post-holder">
                         <div class="news-post-widget">
-                            <img class="img-responsive" src="{{articulo.image.url}}" alt="">
+                            <img class="img-responsive" src="{{post.image.url}}" alt="">
                             <div class="news-post-detail">
-                                <span class="date">{{articulo.created}}</span>
-                                <h2><a href="{% url "home_app:article_detail" articulo.id %}">{{articulo.title}}</a></h2>
-                                <p>{{articulo.content|truncatechars:200}}</p>
+                                <span class="date">{{post.created}}</span>
+                                <h2><a href="{% url "home_app:article_detail" post.slug %}">{{post.title}}</a></h2>
+                                <p>{{post.content|truncatechars:200}}</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+              <!-- Paginación -->
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; Primera</a>
+            <a href="?page={{ posts.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ posts.number }} de {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">Siguiente</a>
+            <a href="?page={{ posts.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
             </div>
         </div>
     </div>

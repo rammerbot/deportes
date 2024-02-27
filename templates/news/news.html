@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block title %}
-    Proximos Eventos
+    Proximos Noticias
 {% endblock title %}
 
 {% block content %}
@@ -10,30 +10,30 @@
    <div class="row">
       <div class="container">
          <div class="col-md-9">
-            {% for articulo in articulos_1 %}
+            {% for noticia in noticia_importante %}
             <div class="feature-post">
                <div class="feature-img">
-                  <img src="{{articulo.image.url}}" class="img-responsive" alt="{{articulo.title}}" />
+                  <img src="{{noticia.image.url}}" class="img-responsive" alt="{{noticia.title}}" />
                </div>
                <div class="feature-cont">
                   <div class="post-people">
                      <div class="left-profile">
                         <div class="post-info">
-                           <img src="{{articulo.user.avatar.url}}" alt="#" />
+                           <img src="{{noticia.user.avatar.url}}" alt="#" />
                            <span>
-                              <h4>Por {{articulo.user.get_full_name}} </h4>
-                              <h5>{{articulo.created}}</h5>
+                              <h4>Por {{noticia.user.get_full_name}} </h4>
+                              <h5>{{noticia.created}}</h5>
                            </span>
                         </div>
                         <span class="share"></span>
                      </div>
                   </div>
                   <div class="post-heading">
-                     <h3>{{articulo.title}}</h3>
-                     <p>{{articulo.content|truncatechars:120}}
+                     <h3>{{noticia.title}}</h3>
+                     <p>{{noticia.content|truncatechars:120}}
                      </p>
                   <div class="full">
-                     <a class="btn" href="{%url 'sports_app:new_detail' articulo.id%}">Leer Mas</a>
+                     <a class="btn" href="{%url 'sports_app:new_detail' noticia.slug%}">Leer Mas</a>
                   </div>
                </div>
             </div>
@@ -44,27 +44,27 @@
             {% endfor %}
          </div>
 
-         {% for articulo in articulos %}
+         {% for noticia in noticias %}
          <div class="feature-post small-blog">
             <div class="col-md-5">
                <div class="feature-img">
-                  <img src="{{articulo.image.url}}" class="img-responsive" alt="#" />
+                  <img src="{{noticia.image.url}}" class="img-responsive" alt="#" />
                </div>
             </div>
             <div class="col-md-7">
                <div class="feature-cont">
                   <div class="post-info">
-                     <img src="{{articulo.user.avatar.url}}" alt="{{articulo.user.get_full_name}}" />
+                     <img src="{{noticia.user.avatar.url}}" alt="{{noticia.user.get_full_name}}" />
                      <span>
-                        <h4>Por {{articulo.user.get_full_name}}</h4>
-                        <h5>{{articulo.created}}</h5>
+                        <h4>Por {{noticia.user.get_full_name}}</h4>
+                        <h5>{{noticia.created}}</h5>
                      </span>
                   </div>
                   <div class="post-heading">
-                     <h3>{{articulo.title}}</h3>
-                     <p>{{articulo.content|truncatechars:200}}</p>
+                     <h3>{{noticia.title}}</h3>
+                     <p>{{noticia.content|truncatechars:200}}</p>
                      <div class="full">
-                        <a class="btn" href="{% url "sports_app:new_detail" articulo.id %}">Leer Mas</a>
+                        <a class="btn" href="{% url "sports_app:new_detail" noticia.slug %}">Leer Mas</a>
                      </div>
                   </div>
                </div>
@@ -75,6 +75,24 @@
             <h4>No hay resultados</h4>
          </div>
          {% endfor %}
+            <!--Navegación de paginación -->
+         <div class="pagination">
+            <span class="step-links">
+               {% if noticias.has_previous %}
+                  <a href="?page=1">&laquo; Primera</a>
+                  <a href="?page={{ noticias.previous_page_number }}">Anterior</a>
+               {% endif %}
+
+               <span class="current">
+                  Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}.
+               </span>
+
+               {% if noticias.has_next %}
+                  <a href="?page={{ noticias.next_page_number }}">Siguiente</a>
+                  <a href="?page={{ noticias.paginator.num_pages }}">Última &raquo;</a>
+               {% endif %}
+            </span>
+         </div>
          </div>
          <div class="col-md-3">
             <div class="blog-sidebar">

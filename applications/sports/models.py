@@ -1,5 +1,6 @@
 from model_utils.models import TimeStampedModel
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 from django.db import models
 
@@ -56,6 +57,13 @@ class Events(TimeStampedModel):
     home_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='home_event')
     visitor_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='visitor_event')
     date = models.DateTimeField('Fecha')
+    slug = models.CharField("Slug", max_length = 180, null=True, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+
+        if self.slug is None:
+            self.slug = slugify(self.event + str(self.created))
+        return super().save(*args, **kwargs)
     
 
     @property
@@ -92,6 +100,13 @@ class PrincipalEvent(TimeStampedModel):
     visitor_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='visitor_principal_event')
     date = models.DateTimeField('Fecha')
     active = models.BooleanField('Activo')
+    slug = models.CharField("Slug", max_length = 180, null=True, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+
+        if self.slug is None:
+            self.slug = slugify(self.event + str(self.created))
+        return super().save(*args, **kwargs)
     
 
     @property

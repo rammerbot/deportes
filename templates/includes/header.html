@@ -73,7 +73,7 @@
                                                       <div class="carousel-inner">
                                                          {% for publicidad in publicidades %}
                                                          <div class="item active">
-                                                            <div class="banner-for-match"><a href="{% url "home_app:publicity_detail" publicidad.id %}" ><img class="img-responsive" src="{{publicidad.image.url}}" alt="#" /></a></div>
+                                                            <div class="banner-for-match"><a href="{% url "home_app:publicity_detail" publicidad.slug %}" ><img class="img-responsive" src="{{publicidad.image.url}}" alt="#" /></a></div>
                                                          </div>
                                                          {% endfor %}
                                                          <!-- End Item -->   
@@ -100,7 +100,7 @@
                                              <ul class="menu-inner">
                                                 <li class="dropdown-header">Proximos Eventos</li>
                                                 {% for publicidad in publicidades %}
-                                                <li><a href="{% url "home_app:publicity_detail" publicidad.id %}">{{publicidad.title}}</a></li>
+                                                <li><a href="{% url "home_app:publicity_detail" publicidad.slug %}">{{publicidad.title}}</a></li>
                                                 {% endfor %}
                                              </ul>
                                           </li>
@@ -187,7 +187,7 @@
                <p class="headline"><i class="fa fa-star" aria-hidden="true"></i> Lo Mas Reciente :</p>
                <!--made by vipul mirajkar thevipulm.appspot.com-->
                <h1>
-                     <a href="" class="typewrite" data-period="2000" data-type='[ "Cantaura en pinta, lo mas reciente.", "Puede hacerse un For para saltar varias noticias.", "Es una lista de streams donde pueden colocarse infinitos encabezados"]'>
+                  <a href="" class="typewrite" data-period="2000" data-type='[{% for publicidad in publicidades %} "{{ publicidad.description }}", {% endfor %}]'>
                      <span class="wrap"></span>
                      </a>
                </h1>	   

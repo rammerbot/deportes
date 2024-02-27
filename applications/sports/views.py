@@ -2,6 +2,7 @@ from typing import Any, Dict
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.core.paginator import Paginator
 
 from .models import Sports, Events, Teams, Result, SportCategories
 from applications.home.models import News
@@ -21,19 +22,28 @@ class NewsView(ListView):
     template_name = "news/news.html"
     model = Events
     context_object_name = "eventos"
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kword = self.request.GET.get('kword','')
-        context["articulos_1"] = News.objects.buscar_breaking_news(kword)
-        context["articulos"] = News.objects.buscar_news(kword)
+
+        # Paginate
+        buscar_noticias = News.objects.buscar_news(kword)
+        paginator = Paginator(buscar_noticias, 12)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context["noticia_importante"] = News.objects.buscar_breaking_news(kword)
+        context["noticias"] = page_obj
         context["deportes"] = Sports.objects.all()
         context["resultados"] = Result.objects.all().order_by("date")
 
         return context
  
 # Detalle de Evento
-def new_detail_view(request, pk):
-    new = get_object_or_404(News, id=pk)
+def new_detail_view(request, slug):
+    new = get_object_or_404(News, slug=slug)
 
     return render(request, "news/news_detail.html", {
         "new":new,
