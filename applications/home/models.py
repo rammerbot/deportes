@@ -98,3 +98,22 @@ class Publicity(TimeStampedModel):
 
     def __str__(self):
         return self.title
+    
+class Warp(TimeStampedModel):
+    warp = models.CharField("Cintillo 1", max_length = 100)
+    warp_2 = models.CharField("Cintillo 2", max_length = 100, blank=True)
+    warp_3 = models.CharField("Cintillo 3", max_length = 100, blank=True)
+    active = models.BooleanField("Activado")
+    
+    class Meta:
+        verbose_name = "Cintillo"
+        verbose_name_plural = "Cintillos"
+
+    def __str__(self):
+        return self.warp
+    
+class Contact(TimeStampedModel):
+    name = models.CharField("Nombre",max_length = 50)
+    email = models.EmailField("Correo")
+    telephone = models.CharField("Telefono", max_length = 20)
+    message = models.TextField("Mensaje")

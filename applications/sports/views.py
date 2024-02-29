@@ -1,20 +1,41 @@
 from typing import Any, Dict
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Sports, Events, Teams, Result, SportCategories
 from applications.home.models import News
 
+
 # Create your views here.
 
 # deportes Page
-class SportView(ListView):
+def sports_view(request):
+    kwords = request.GET.get('kwords')
+    deporte_seleccionado = request.GET.get('deporte')
+    categorias = Sports.objects.all()
+    eventos_por_categoria = {}
 
-    template_name = "deportes/deportes.html"
-    model = Sports
-    context_object_name = 'deportes'
+    for categoria in categorias:
+        if kwords:
+            eventos = Events.objects.filter(
+                Q(sport__sport__icontains=kwords) | 
+                Q(description__icontains=kwords)|
+                Q(home_team__name__icontains=kwords)|
+                Q(visitor_team__name__icontains=kwords),
+                sport=categoria
+            )
+        elif deporte_seleccionado:
+            eventos = Events.objects.filter(sport=categoria, sport__sport=deporte_seleccionado)
+        else:
+            eventos = Events.objects.filter(sport=categoria)
+            
+        eventos_por_categoria[categoria.sport] = eventos
+
+    return render(request, 'deportes/deportes.html', {'deportes': eventos_por_categoria})
 
 
 # Proximos Eventos 
@@ -63,18 +84,31 @@ class TeamsDetailViews(DetailView):
 
 # Resultados
 
-class SportsResultsView(ListView):
-    template_name = "resultados/resultados.html"
-    model = Sports
-    context_object_name = "deportes"
-    
-def results_list_view(request, pk):
-    
-    resultados = Result.objects.filter(sport_category_id = pk)
+# deportes Page
+def sports_results_view(request):
+    kwords = request.GET.get('kwords')
+    deporte_seleccionado = request.GET.get('deporte')
+    categorias = Sports.objects.all()
+    eventos_por_categoria = {}
 
-    return render(request, "resultados/resultados_list.html", {
-        "resultados":resultados,
-    })
+    for categoria in categorias:
+        if kwords:
+            eventos = Result.objects.filter(
+                Q(sport__sport__icontains=kwords) | 
+                Q(description__icontains=kwords)|
+                Q(home_team__name__icontains=kwords)|
+                Q(visitor_team__name__icontains=kwords),
+                sport=categoria
+            )
+        elif deporte_seleccionado:
+            eventos = Result.objects.filter(sport=categoria, sport__sport=deporte_seleccionado)
+        else:
+            eventos = Result.objects.filter(sport=categoria)
+            
+        eventos_por_categoria[categoria.sport] = eventos
+
+    return render(request, 'resultados/resultados_list.html', {'deportes': eventos_por_categoria})
+
 
 
 # Lista de proximos eventos por categorias

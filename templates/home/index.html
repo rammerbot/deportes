@@ -55,48 +55,7 @@
                     <h3>{{noticia.content|truncatechars:100}}</h3>
                     </div>
                 </aside>
-                <h4>Proximos Partidos</h4>
-                <aside id="sidebar" class="left-bar">
-                    <div class="feature-matchs">
-                        <div class="team-btw-match">
-                            {% for evento in eventos %}
-                            <ul>
-                                <li>
-                                    <img src="{{evento.home_team.image_31_28.url}}" alt="">
-                                    <span>{{evento.home_team}}</span>
-                                </li>
-                                <li class="vs"><span>vs</span></li>
-                                <li>
-                                    <img src="{{evento.visitor_team.image_31_28.url}}" alt="">
-                                    <span>{{evento.visitor_team}}</span>
-                                </li>
-                            </ul>
-                            {% endfor %}
-                            <ul>
-                        </div>
-                    </div>
-                </aside>
-                <h4>Resultados</h4>
-                <aside id="sidebar" class="left-bar">
-                    <div class="feature-matchs">
-                        <div class="team-btw-match">
-                            {% for resultado in resultados %}
-                            <ul>
-                                <li>
-                                    <img src="{{resultado.home_team.image_31_28.url}}" alt="">
-                                    <span>{{resultado.home_team}}</span>
-                                </li>
-                                <li class="vs"><span>vs</span></li>
-                                <li>
-                                    <img src="{{resultado.visitor_team.image_31_28.url}}" alt="">
-                                    <span>{{resultado.visitor_team}}</span>
-                                </li>
-                            </ul>
-                            {% endfor %}
-                            <ul>
-                        </div>
-                    </div>
-                </aside>
+                {% include "includes/event_list.html" %}
             </div>
             <div class="col-lg-8 col-sm-8 col-xs-12">
                 {% for post in posts %}

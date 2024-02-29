@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block title %}
-    Proximos Noticias
+   Noticias
 {% endblock title %}
 
 {% block content %}
@@ -129,60 +129,7 @@
                </div>
             </div>
             {% endfor %}
-            <aside id="sidebar" class="left-bar">
-               <div class="feature-matchs">
-                  <div class="team-btw-match">
-                     <h4 class="heading">Proximos eventos</h4>
-                     {% for evento in eventos %}
-                     <h3>{{evento.date}}</h3>   
-                        <ul>
-                           <li>
-                              <img src="{{evento.home_team.image_31_28.url}}" alt="">
-                              <span>{{evento.home_team}}</span>
-                           </li>
-                           <li class="vs"><span>vs</span></li>
-                           <li>
-                              <img class="mini_event" src="{{evento.visitor_team.image_31_28.url}}" alt="">
-                              <span>{{evento.visitor_team}}</span>
-                           </li>
-                        </ul>
-                      {% endfor %}
-                  </div>
-               </div>
-            </aside>
-            <aside id="sidebar" class="left-bar">
-               <div class="banner-sidebar">
-                  <img class="img-responsive" src="{%static 'images/match-banner1.jpg'%}" alt="#">
-                  <h3>Argentina vs Chile|Goals of the match | COPA </h3>
-               </div>
-            </aside>
-            <aside id="sidebar" class="left-bar">
-               <div class="feature-matchs">
-                  <div class="team-btw-match">
-                     <h4 class="heading">Resultados</h4>
-                     {% for resultado in resultados %}   
-                     <h3>{{resultado.date}}</h3>
-                        <ul>
-                           <li>
-                              <img src="{{resultado.home_team.image_31_28.url}}" alt="">
-                              <span>{{resultado.home_team}}</span>
-                              <div class="post-info">
-                                 <span><h4>{{resultado.home_goals}}</h4></span>
-                              </div>
-                           </li>
-                           <li class="vs"><span>vs</span></li>
-                           <li>
-                              <img src="{{resultado.visitor_team.image_31_28.url}}" alt="">
-                              <span>{{resultado.visitor_team}}</span>
-                              <div class="post-info">
-                                 <span><h4>{{resultado.visitors_goals}}</h4></span>
-                              </div>
-                           </li>
-                        </ul>
-                      {% endfor %}
-                  </div>
-               </div>
-            </aside>
+            {% include "includes/event_list.html" %}
          </div>
       </div>
    </div>

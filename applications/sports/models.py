@@ -4,6 +4,8 @@ from django.utils.text import slugify
 
 from django.db import models
 
+from .managers import EventManager
+
 
 # Create your models here.
 
@@ -58,6 +60,7 @@ class Events(TimeStampedModel):
     visitor_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='visitor_event')
     date = models.DateTimeField('Fecha')
     slug = models.CharField("Slug", max_length = 180, null=True, unique=True, blank=True)
+    objects = EventManager()
 
     def save(self, *args, **kwargs):
 
@@ -138,12 +141,17 @@ class PrincipalEvent(TimeStampedModel):
 # Resultado de eventos 
 class Result(TimeStampedModel):
     event_name = models.CharField('Final de Evento', max_length=100)
+    sport = models.ForeignKey(Sports, on_delete=models.CASCADE)
     sport_category = models.ForeignKey(SportCategories, on_delete=models.CASCADE)
+    description = models.TextField("descripcion", blank=True)
     home_team = models.ForeignKey(Teams, on_delete=models.CASCADE)
     visitor_team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='visitor_result')
     home_goals = models.PositiveIntegerField('Marcador del Local')
     visitors_goals = models.PositiveIntegerField('Marcador del visitante')
     date = models.DateTimeField('Fecha')
+    active = models.BooleanField('Activo', default=False)
+    slug = models.CharField("Slug", max_length = 180, null=True, unique=True, blank=True)
+
 
     @property
     def home_image_31_28(self):

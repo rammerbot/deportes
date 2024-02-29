@@ -75,7 +75,8 @@ TEMPLATES = [
                 'applications.sports.context_processors.sports_list',
                 'applications.sports.context_processors.sport_categories',
                 'applications.sports.context_processors.event_list',
-                'applications.home.context_processors.publicity_list'                
+                'applications.home.context_processors.publicity_list',
+                'applications.home.context_processors.warp_print',                
             ],
         },
     },

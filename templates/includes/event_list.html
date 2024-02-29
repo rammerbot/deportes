@@ -1,0 +1,56 @@
+{% load static %}
+
+<aside id="sidebar" class="left-bar">
+    <div class="feature-matchs">
+       <div class="team-btw-match">
+          <h4 class="heading"><a href={% url "sports_app:sports" %}> Proximos partidos</a></h4>
+          {% for evento in eventos %}
+          <span>{{evento.event}}</span> 
+          <br>
+          <span>{{evento.date}}</span> 
+          <hr> 
+             <ul>
+                <li>
+                   <img src="{{evento.home_team.image_31_28.url}}" alt="">
+                   <span>{{evento.home_team}}</span>
+                </li>
+                <li class="vs"><span>vs</span></li>
+                <li>
+                   <img class="mini_event" src="{{evento.visitor_team.image_31_28.url}}" alt="">
+                   <span>{{evento.visitor_team}}</span>
+                </li>
+             </ul>
+           {% endfor %}
+       </div>
+    </div>
+ </aside>
+ <aside id="sidebar" class="left-bar">
+    <div class="feature-matchs">
+       <div class="team-btw-match">
+          <h4 class="heading">Resultados</h4>
+          {% for resultado in resultados %}   
+          <span>{{resultado}}</span> 
+          <br>
+          <span>{{resultado.date}}</span> 
+          <hr>
+             <ul>
+                <li>
+                   <img src="{{resultado.home_team.image_31_28.url}}" alt="">
+                   <span>{{resultado.home_team}}</span>
+                   <div class="post-info">
+                      <span><h4>{{resultado.home_goals}}</h4></span>
+                   </div>
+                </li>
+                <li class="vs"><span>vs</span></li>
+                <li>
+                   <img src="{{resultado.visitor_team.image_31_28.url}}" alt="">
+                   <span>{{resultado.visitor_team}}</span>
+                   <div class="post-info">
+                      <span><h4>{{resultado.visitors_goals}}</h4></span>
+                   </div>
+                </li>
+             </ul>
+           {% endfor %}
+       </div>
+    </div>
+ </aside>
