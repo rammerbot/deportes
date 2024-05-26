@@ -5,7 +5,7 @@
 </div>  
   
 
-### <div align="center">Portal de la comunidad la campiña, Bolivar, Venezuela</div>  
+### <div align="center">Pagina de Actualidades deportivas</div>  
   #### Descripcion.
   
 > Trata de una web deportiva en donde se pueden visualizar los aconteceres mas acuales del mundo deportivo, asi como los resultado de los partidos, tanto locales como a nivel internacional.
